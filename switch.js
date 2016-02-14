@@ -1,5 +1,9 @@
 client = new Paho.MQTT.Client("test.mosquitto.org", 8080, "clientId");
-client.connect({onSuccess:onConnect});
+client.connect({
+  onSuccess:onConnect
+});
+client.onMessageArrived = onMessageArrived;
+
 // called when the client connects
 function onConnect() {
   // Once a connection has been made, make a subscription and send a message.
