@@ -26,5 +26,6 @@ function toggle(s){
   var value = s.checked;
   message = new Paho.MQTT.Message(value ? "on" :"off");
   message.destinationName = "light-123";
+  message.retained = "true";
   client.send(message); 
 }
