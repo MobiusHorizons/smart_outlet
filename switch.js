@@ -4,7 +4,7 @@ client.connect({onSuccess:onConnect});
 function onConnect() {
   // Once a connection has been made, make a subscription and send a message.
   console.log("onConnect");
-  client.subscribe("/light-123");
+  client.subscribe("light-123");
 }
 
 // called when a message arrives
@@ -21,6 +21,6 @@ function onMessageArrived(message) {
 function toggle(s){
   var value = s.checked;
   message = new Paho.MQTT.Message(value ? "on" :"off");
-  message.destinationName = "/light-123";
+  message.destinationName = "light-123";
   client.send(message); 
 }
