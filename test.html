@@ -2,10 +2,11 @@
 <head>
   <title>Switch</title>
   <link rel="stylesheet" href="style.css" />
+  <script src="mqttws31.js"></script>
   <script src="switch.js"></script>
 </head>
 <body>
-  <label class="button"><input type="checkbox" onclick="toggle(this)" /><span></span>
+  <label class="button"><input id="switch" type="checkbox" onclick="toggle(this)" /><span></span>
     <span></span>
   </label>
 </body>
