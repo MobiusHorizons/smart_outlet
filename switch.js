@@ -1,31 +1,29 @@
-client = new Paho.MQTT.Client("test.mosquitto.org", 8080, "clientId");
-client.connect({
-  onSuccess:onConnect
-});
-client.onMessageArrived = onMessageArrived;
+//var mqtt = require("mqtt");
 
-// called when the client connects
-function onConnect() {
-  // Once a connection has been made, make a subscription and send a message.
-  console.log("onConnect");
-  client.subscribe("light-123");
+function log(){
+  console.log(arguments);
 }
 
-// called when a message arrives
-function onMessageArrived(message) {
-  console.log("onMessageArrived:"+message.payloadString);
+var client = mqtt.connect("ws://test.mosquitto.org:8080");
+client.subscribe("light-123");
+
+client.on("message", function(topic, payload){
+  log(topic, payload.toString());
   var s = document.getElementById("switch");
-  if ( message.payloadString == "on"){
-    s.checked = true;
-  } else if (message.payloadString =="off"){
-    s.checked = false;
+  if (topic === "light-123"){
+    if ( payload.toString() == "on"){
+      s.checked = true;
+      window.title = "on";
+    } else if (payload.toString() =="off"){
+      s.checked = false;
+      window.title = "off"
+    }
   }
-}
+});
 
-function toggle(s){
+window.toggle = function(s){
   var value = s.checked;
-  message = new Paho.MQTT.Message(value ? "on" :"off");
-  message.destinationName = "light-123";
-  message.retained = true;
-  client.send(message); 
+  var status = value ? "on" : "off";
+  client.publish("light-123", status, {retain: true});
+  window.title = status;
 }
