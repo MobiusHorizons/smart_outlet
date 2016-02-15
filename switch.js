@@ -1,5 +1,3 @@
-//var mqtt = require("mqtt");
-
 function log(){
   console.log(arguments);
 }
@@ -13,10 +11,10 @@ client.on("message", function(topic, payload){
   if (topic === "light-123"){
     if ( payload.toString() == "on"){
       s.checked = true;
-      window.title = "on";
+      document.title = "on";
     } else if (payload.toString() =="off"){
       s.checked = false;
-      window.title = "off"
+      document.title = "off"
     }
   }
 });
@@ -25,5 +23,5 @@ window.toggle = function(s){
   var value = s.checked;
   var status = value ? "on" : "off";
   client.publish("light-123", status, {retain: true});
-  window.title = status;
+  document.title = status;
 }
